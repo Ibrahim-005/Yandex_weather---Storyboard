@@ -13,7 +13,7 @@ class ListTVC: UITableViewController {
     var cityArray = [Weather]()
     var filterCityArray = [Weather]()
     
-    var nameCityArray = ["Moscow", "New york","Sochi", "Doha","Paris","Berlin","London","Tashkent","Seoul","Namangan","Kosonsoy"]
+    var nameCityArray = ["Moscow", "New york","Tokio", "Doha","Paris","Berlin","London","Tashkent","Seoul","Namangan","Kosonsoy"]
     let searchController = UISearchController(searchResultsController: nil)
     
     var searchBarIsEmpty : Bool {
