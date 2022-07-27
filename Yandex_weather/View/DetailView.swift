@@ -11,10 +11,7 @@ import SwiftSVG
 class DetailView: UIViewController {
 
     @IBOutlet weak var cityName: UILabel!
-    @IBOutlet weak var cityView: UIView!
-    @IBOutlet weak var Condition1: UILabel!
-    
-    @IBOutlet weak var Condition: UILabel!
+    @IBOutlet weak var weatherICON: UIImageView!
     @IBOutlet weak var tempCity: UILabel!
     @IBOutlet weak var pressure: UILabel!
     @IBOutlet weak var windSpeed: UILabel!
@@ -22,27 +19,16 @@ class DetailView: UIViewController {
     @IBOutlet weak var tempMax: UILabel!
     
     var weatherM : Weather?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         refreshLabel()
+        setUpConstraint()
     }
     
     func refreshLabel(){
         cityName.text = weatherM?.name
-        let url = URL(string: "https://yastatic.net/weather/i/icons/funky/dark/\(String(describing: weatherM!.conditionCode)).svg")!
-//        let Wimage = UIView(SVGURL: url!) { (image) in
-//            image.resizeToFit(self.cityView.bounds)
-//        }
-//        guard url != nil else {
-//            print("XATTOOOO")
-//            return
-//        }
-        let Wimage = UIView(SVGURL: url) { imagess in
-            imagess.resizeToFit(self.cityView.bounds)
-        }
-        Wimage.sizeToFit()
-        self.cityView.addSubview(Wimage)
-      //  Condition1.text = weatherM?.condition
+        weatherICON.image = UIImage(systemName: weatherM?.icon ?? "")
         tempCity.text = weatherM?.tempString
         pressure.text = String(format: "%.0f", weatherM!.pressureMm)
         windSpeed.text = String(format: "%.0f", weatherM!.windSpeed)
@@ -50,4 +36,33 @@ class DetailView: UIViewController {
         tempMax.text = String(format: "%.0f", weatherM!.tempMax)
     }
     
+    func setUpConstraint(){
+        NSLayoutConstraint.activate([
+            weatherICON.widthAnchor.constraint(equalToConstant: 50),
+            weatherICON.heightAnchor.constraint(equalToConstant: 50)
+        ])
+    }
 }
+
+
+
+
+
+
+
+
+//var imageView = UIImageView()
+//        var image = UIImage(named: "work25")
+//        imageView.image = image
+//        dropoffLocationField.rightView = imageView
+//        dropoffLocationField.rightViewMode = .always
+//
+
+
+
+//let url = URL(string: "https://yastatic.net/weather/i/icons/funky/dark/\(String(describing:
+//weatherM!.conditionCode)).svg")!
+//let Wimage = UIView(SVGURL: url) { imagess in
+//    imagess.resizeToFit(self.cityView.bounds)
+//}
+//self.cityView.addSubview(Wimage)

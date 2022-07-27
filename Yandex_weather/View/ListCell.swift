@@ -13,7 +13,6 @@ class ListCell: UITableViewCell {
     @IBOutlet weak var cityCondition: UILabel!
     @IBOutlet weak var tempCity: UILabel!
     
-    
     override func awakeFromNib() {
         super.awakeFromNib()
       
@@ -24,6 +23,5 @@ class ListCell: UITableViewCell {
         self.cityCondition.text = weather.condition
         self.tempCity.text = weather.tempString
     }
-
 }
 

@@ -90,19 +90,11 @@
 				2584E0E228850DFA007776C8 /* SceneDelegate.swift */,
 				2584E0F62885126A007776C8 /* Model */,
 				2584E0F528851264007776C8 /* View */,
-				2584E0F42885125B007776C8 /* Controller */,
 				2584E0FF288518BE007776C8 /* Constant */,
 				2584E0E928850DFB007776C8 /* Assets.xcassets */,
 				2584E0EE28850DFB007776C8 /* Info.plist */,
 			);
 			path = Yandex_weather;
-			sourceTree = "<group>";
-		};
-		2584E0F42885125B007776C8 /* Controller */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Controller;
 			sourceTree = "<group>";
 		};
 		2584E0F528851264007776C8 /* View */ = {

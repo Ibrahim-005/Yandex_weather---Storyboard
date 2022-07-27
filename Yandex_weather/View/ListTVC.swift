@@ -13,8 +13,7 @@ class ListTVC: UITableViewController {
     var cityArray = [Weather]()
     var filterCityArray = [Weather]()
     
-    var nameCityArray = ["Moscow", "Novosibirsk","Kazan", "Doha","Paris","Berlin","London","Tashkent","Seoul","Namangan"]
-    
+    var nameCityArray = ["Moscow", "New york","Kazan", "Doha","Paris","Berlin","London","Tashkent","Seoul","Namangan","Kosonsoy"]
     let searchController = UISearchController(searchResultsController: nil)
     
     var searchBarIsEmpty : Bool {
@@ -32,36 +31,26 @@ class ListTVC: UITableViewController {
         if cityArray.isEmpty{
             cityArray = Array(repeating: emptyCity, count: nameCityArray.count)
         }
-        
         addCities()
         tableView.delegate = self
         tableView.dataSource = self
         
         searchController.searchResultsUpdater = self
-        searchController.obscuresBackgroundDuringPresentation = false
         searchController.searchBar.placeholder = "Search"
         navigationItem.searchController = searchController
-        definesPresentationContext = true
         navigationItem.hidesSearchBarWhenScrolling = false
-        
     }
 
    
     @IBAction func AddCitybyAlert(_ sender: UIBarButtonItem) {
-        
         alertCity(name: "City", placeHolder: "Add a new city ") { city in
             self.nameCityArray.append(city)
             self.cityArray.append(self.emptyCity)
             self.addCities()
-          //  self.tableView.reloadData()
         }
-        
     }
     
-    
-    
     func addCities(){
-
         getWeather(cityArray: self.nameCityArray) { index, weather in
             self.cityArray[index] = weather
             self.cityArray[index].name = self.nameCityArray[index]
@@ -69,18 +58,17 @@ class ListTVC: UITableViewController {
             DispatchQueue.main.async {
                 self.tableView.reloadData()
             }
-          //  print(weather)
         }
-
     }
     
-    // MARK: - Table view data source
+// MARK: - Table view data source
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if isFiltering {
             return filterCityArray.count
+        } else{
+            return cityArray.count
         }
-        return cityArray.count
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -92,17 +80,15 @@ class ListTVC: UITableViewController {
         }else{
             weather = cityArray[indexPath.row]
         }
-        
         cell.configure(weather: weather)
         
         return cell
     }
     
-    
+    //Deleting un needed cities
     override func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
       
         let delete = UIContextualAction(style: .destructive, title: "Delete") { _ , _ , completion in
-           
             let editingRow = self.nameCityArray[indexPath.row]
        
             if let index = self.nameCityArray.firstIndex(of: editingRow){
@@ -118,7 +104,7 @@ class ListTVC: UITableViewController {
         return UISwipeActionsConfiguration(actions: [delete])
     }
 
-    
+  // Carry city model to the detail view
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "showDetail" {
             guard let indexPath = tableView.indexPathForSelectedRow else {return}
@@ -137,6 +123,8 @@ class ListTVC: UITableViewController {
     }
 }
 
+//MARK: - Searching filterly
+
 extension ListTVC: UISearchResultsUpdating {
     
     func updateSearchResults(for searchController: UISearchController) {
@@ -148,7 +136,6 @@ extension ListTVC: UISearchResultsUpdating {
         filterCityArray = cityArray.filter({ filter in
             filter.name.contains(searchText)
         })
-        
         tableView.reloadData()
     }
 }

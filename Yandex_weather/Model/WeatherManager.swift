@@ -21,7 +21,6 @@ struct WeatherManager {
         let task = URLSession.shared.dataTask(with: request) { data, response, error in
             
             guard let data = data else{
-               //// print(String(describing: error))
                 return
             }
             if let weatherData = self.parseJson(data){
@@ -34,19 +33,22 @@ struct WeatherManager {
     func parseJson(_ data: Data) -> Weather? {
         
         let decoder = JSONDecoder()
-        
         do{
             let decodedData = try decoder.decode(WeatherData.self, from: data)
             guard let weather = Weather(weatherData: decodedData) else { return nil }
             
             return weather
         }
-        catch let error as NSError {
+        catch _ as NSError {
             print("DECODINGGGG__")
         }
         return nil
     }
 }
+
+
+
+
 
 //lat: Double, long: Double , completion: @escaping(Weather) -> Void
 //print(String(data: data, encoding: .utf8)!)
